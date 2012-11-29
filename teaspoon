@@ -1,0 +1,856 @@
+#!/bin/bash
+#...
+
+# MUST BE RUN AS ROOT OR SUDO
+WHOAMI=`whoami`;
+if [ "$WHOAMI" != "root" ]; then
+	echo "must run script as root";
+	exit 1;
+fi
+
+
+ERRORS=0
+
+# Note that we use `"$@"' to let each command-line parameter expand to a 
+# separate word. The quotes around `$@' are essential!
+# We need TEMP as the `eval set --' would nuke the return value of getopt.
+TEMP=`getopt -o h --long authenticator::,authority::,broadcast_address::,cluster_name::,column_index_size_in_kb::,commitlog_directory::,commitlog_sync::,commitlog_sync_period_in_ms::,commitlog_total_space_in_mb::,compaction_preheat_key_cache::,compaction_throughput_mb_per_sec::,concurrent_compactors::,concurrent_reads::,concurrent_writes::,data_file_directories::,dynamic_snitch::,dynamic_snitch_badness_threshold::,dynamic_snitch_reset_interval_in_ms::,dynamic_snitch_update_interval_in_ms::,endpoint_snitch::,flush_largest_memtables_at::,hinted_handoff_enabled::,hinted_handoff_throttle_delay_in_ms::,incremental_backups::,index_interval::,initial_token::,in_memory_compaction_limit_in_mb::,internode_encryption::,key_cache_save_period::,key_cache_size_in_mb::,keystore::,keystore_password::,listen_address::,max_hint_window_in_ms::,memtable_flush_queue_size::,memtable_flush_writers::,memtable_total_space_in_mb::,multithreaded_compaction::,partitioner::,phi_convict_threshold::,reduce_cache_capacity_to::,reduce_cache_sizes_at::,request_scheduler::,request_scheduler_id::,row_cache_provider::,row_cache_save_period::,row_cache_size_in_mb::,rpc_address::,rpc_keepalive::,rpc_max_threads::,rpc_min_threads::,rpc_port::,rpc_recv_buff_size_in_bytes::,rpc_send_buff_size_in_bytes::,rpc_server_type::,rpc_timeout_in_ms::,saved_caches_directory::,seed_provider::,seeds::,sliced_buffer_size_in_kb::,snapshot_before_compaction::,storage_port::,stream_throughput_outbound_megabits_per_sec::,thrift_framed_transport_size_in_mb::,thrift_max_message_length_in_mb::,truststore::,truststore_password::,max_heap_size::,heap_newsize::,config_dir:: \
+         -n 'example.bash' -- "$@"`
+
+
+if [ $? != 0 ] ; then echo "Terminating..." >&2 ; exit 1 ; fi
+
+# Note the quotes around `$TEMP': they are essential!
+eval set -- "$TEMP"
+
+while true ; do
+        case "$1" in
+                --authenticator)
+                        case "$2" in
+                                '') echo "Please provide an value for $1"; ERRORS=$(($ERRORS+1)); shift 2;;
+                                *) AUTHENTICATOR=$2; echo "authenticator=$AUTHENTICATOR"; shift 2;;
+                        esac ;;
+                --authority)
+                        case "$2" in
+                                '') echo "Please provide an value for $1"; ERRORS=$(($ERRORS+1)); shift 2;;
+                                *) AUTHORITY=$2; echo "authority=$AUTHORITY"; shift 2;;
+                        esac ;;
+                --broadcast_address)
+                        case "$2" in
+                                '') echo "Please provide an value for $1"; ERRORS=$(($ERRORS+1)); shift 2;;
+                                *) BROADCAST_ADDRESS=$2; echo "broadcast_address=$BROADCAST_ADDRESS"; shift 2;;
+                        esac ;;
+                --cluster_name)
+                        case "$2" in
+                                '') echo "Please provide an value for $1"; ERRORS=$(($ERRORS+1)); shift 2;;
+                                *) CLUSTER_NAME=$2; echo "cluster_name=$CLUSTER_NAME"; shift 2;;
+                        esac ;;
+                --column_index_size_in_kb)
+                        case "$2" in
+                                '') echo "Please provide an value for $1"; ERRORS=$(($ERRORS+1)); shift 2;;
+                                *) COLUMN_INDEX_SIZE_IN_KB=$2; echo "column_index_size_in_kb=$COLUMN_INDEX_SIZE_IN_KB"; shift 2;;
+                        esac ;;
+                --commitlog_directory)
+                        case "$2" in
+                                '') echo "Please provide an value for $1"; ERRORS=$(($ERRORS+1)); shift 2;;
+                                *) COMMITLOG_DIRECTORY=$2; echo "commitlog_directory=$COMMITLOG_DIRECTORY"; shift 2;;
+                        esac ;;
+                --commitlog_sync)
+                        case "$2" in
+                                '') echo "Please provide an value for $1"; ERRORS=$(($ERRORS+1)); shift 2;;
+                                *) COMMITLOG_SYNC=$2; echo "commitlog_sync=$COMMITLOG_SYNC"; shift 2;;
+                        esac ;;
+                --commitlog_sync_period_in_ms)
+                        case "$2" in
+                                '') echo "Please provide an value for $1"; ERRORS=$(($ERRORS+1)); shift 2;;
+                                *) COMMITLOG_SYNC_PERIOD_IN_MS=$2; echo "commitlog_sync_period_in_ms=$COMMITLOG_SYNC_PERIOD_IN_MS"; shift 2;;
+                        esac ;;
+                --commitlog_total_space_in_mb)
+                        case "$2" in
+                                '') echo "Please provide an value for $1"; ERRORS=$(($ERRORS+1)); shift 2;;
+                                *) COMMITLOG_TOTAL_SPACE_IN_MB=$2; echo "commitlog_total_space_in_mb=$COMMITLOG_TOTAL_SPACE_IN_MB"; shift 2;;
+                        esac ;;
+                --compaction_preheat_key_cache)
+                        case "$2" in
+                                '') echo "Please provide an value for $1"; ERRORS=$(($ERRORS+1)); shift 2;;
+                                *) COMPACTION_PREHEAT_KEY_CACHE=$2; echo "compaction_preheat_key_cache=$COMPACTION_PREHEAT_KEY_CACHE"; shift 2;;
+                        esac ;;
+                --compaction_throughput_mb_per_sec)
+                        case "$2" in
+                                '') echo "Please provide an value for $1"; ERRORS=$(($ERRORS+1)); shift 2;;
+                                *) COMPACTION_THROUGHPUT_MB_PER_SEC=$2; echo "compaction_throughput_mb_per_sec=$COMPACTION_THROUGHPUT_MB_PER_SEC"; shift 2;;
+                        esac ;;
+                --concurrent_compactors)
+                        case "$2" in
+                                '') echo "Please provide an value for $1"; ERRORS=$(($ERRORS+1)); shift 2;;
+                                *) CONCURRENT_COMPACTORS=$2; echo "concurrent_compactors=$CONCURRENT_COMPACTORS"; shift 2;;
+                        esac ;;
+                --concurrent_reads)
+                        case "$2" in
+                                '') echo "Please provide an value for $1"; ERRORS=$(($ERRORS+1)); shift 2;;
+                                *) CONCURRENT_READS=$2; echo "concurrent_reads=$CONCURRENT_READS"; shift 2;;
+                        esac ;;
+                --concurrent_writes)
+                        case "$2" in
+                                '') echo "Please provide an value for $1"; ERRORS=$(($ERRORS+1)); shift 2;;
+                                *) CONCURRENT_WRITES=$2; echo "concurrent_writes=$CONCURRENT_WRITES"; shift 2;;
+                        esac ;;
+                --data_file_directories)
+                        case "$2" in
+                                '') echo "Please provide an value for $1"; ERRORS=$(($ERRORS+1)); shift 2;;
+                                *) DATA_FILE_DIRECTORIES=$2; echo "data_file_directories=$DATA_FILE_DIRECTORIES"; shift 2;;
+                        esac ;;
+                --dynamic_snitch)
+                        case "$2" in
+                                '') echo "Please provide an value for $1"; ERRORS=$(($ERRORS+1)); shift 2;;
+                                *) DYNAMIC_SNITCH=$2; echo "dynamic_snitch=$DYNAMIC_SNITCH"; shift 2;;
+                        esac ;;
+                --dynamic_snitch_badness_threshold)
+                        case "$2" in
+                                '') echo "Please provide an value for $1"; ERRORS=$(($ERRORS+1)); shift 2;;
+                                *) DYNAMIC_SNITCH_BADNESS_THRESHOLD=$2; echo "dynamic_snitch_badness_threshold=$DYNAMIC_SNITCH_BADNESS_THRESHOLD"; shift 2;;
+                        esac ;;
+                --dynamic_snitch_reset_interval_in_ms)
+                        case "$2" in
+                                '') echo "Please provide an value for $1"; ERRORS=$(($ERRORS+1)); shift 2;;
+                                *) DYNAMIC_SNITCH_RESET_INTERVAL_IN_MS=$2; echo "dynamic_snitch_reset_interval_in_ms=$DYNAMIC_SNITCH_RESET_INTERVAL_IN_MS"; shift 2;;
+                        esac ;;
+                --dynamic_snitch_update_interval_in_ms)
+                        case "$2" in
+                                '') echo "Please provide an value for $1"; ERRORS=$(($ERRORS+1)); shift 2;;
+                                *) DYNAMIC_SNITCH_UPDATE_INTERVAL_IN_MS=$2; echo "dynamic_snitch_update_interval_in_ms=$DYNAMIC_SNITCH_UPDATE_INTERVAL_IN_MS"; shift 2;;
+                        esac ;;
+                --endpoint_snitch)
+                        case "$2" in
+                                '') echo "Please provide an value for $1"; ERRORS=$(($ERRORS+1)); shift 2;;
+                                *) ENDPOINT_SNITCH=$2; echo "endpoint_snitch=$ENDPOINT_SNITCH"; shift 2;;
+                        esac ;;
+                --flush_largest_memtables_at)
+                        case "$2" in
+                                '') echo "Please provide an value for $1"; ERRORS=$(($ERRORS+1)); shift 2;;
+                                *) FLUSH_LARGEST_MEMTABLES_AT=$2; echo "flush_largest_memtables_at=$FLUSH_LARGEST_MEMTABLES_AT"; shift 2;;
+                        esac ;;
+                --hinted_handoff_enabled)
+                        case "$2" in
+                                '') echo "Please provide an value for $1"; ERRORS=$(($ERRORS+1)); shift 2;;
+                                *) HINTED_HANDOFF_ENABLED=$2; echo "hinted_handoff_enabled=$HINTED_HANDOFF_ENABLED"; shift 2;;
+                        esac ;;
+                --hinted_handoff_throttle_delay_in_ms)
+                        case "$2" in
+                                '') echo "Please provide an value for $1"; ERRORS=$(($ERRORS+1)); shift 2;;
+                                *) HINTED_HANDOFF_THROTTLE_DELAY_IN_MS=$2; echo "hinted_handoff_throttle_delay_in_ms=$HINTED_HANDOFF_THROTTLE_DELAY_IN_MS"; shift 2;;
+                        esac ;;
+                --incremental_backups)
+                        case "$2" in
+                                '') echo "Please provide an value for $1"; ERRORS=$(($ERRORS+1)); shift 2;;
+                                *) INCREMENTAL_BACKUPS=$2; echo "incremental_backups=$INCREMENTAL_BACKUPS"; shift 2;;
+                        esac ;;
+                --index_interval)
+                        case "$2" in
+                                '') echo "Please provide an value for $1"; ERRORS=$(($ERRORS+1)); shift 2;;
+                                *) INDEX_INTERVAL=$2; echo "index_interval=$INDEX_INTERVAL"; shift 2;;
+                        esac ;;
+                --initial_token)
+                        case "$2" in
+                                '') echo "Please provide an value for $1"; ERRORS=$(($ERRORS+1)); shift 2;;
+                                *) INITIAL_TOKEN=$2; echo "initial_token=$INITIAL_TOKEN"; shift 2;;
+                        esac ;;
+                --in_memory_compaction_limit_in_mb)
+                        case "$2" in
+                                '') echo "Please provide an value for $1"; ERRORS=$(($ERRORS+1)); shift 2;;
+                                *) IN_MEMORY_COMPACTION_LIMIT_IN_MB=$2; echo "in_memory_compaction_limit_in_mb=$IN_MEMORY_COMPACTION_LIMIT_IN_MB"; shift 2;;
+                        esac ;;
+                --internode_encryption)
+                        case "$2" in
+                                '') echo "Please provide an value for $1"; ERRORS=$(($ERRORS+1)); shift 2;;
+                                *) INTERNODE_ENCRYPTION=$2; echo "internode_encryption=$INTERNODE_ENCRYPTION"; shift 2;;
+                        esac ;;
+                --key_cache_save_period)
+                        case "$2" in
+                                '') echo "Please provide an value for $1"; ERRORS=$(($ERRORS+1)); shift 2;;
+                                *) KEY_CACHE_SAVE_PERIOD=$2; echo "key_cache_save_period=$KEY_CACHE_SAVE_PERIOD"; shift 2;;
+                        esac ;;
+                --key_cache_size_in_mb)
+                        case "$2" in
+                                '') echo "Please provide an value for $1"; ERRORS=$(($ERRORS+1)); shift 2;;
+                                *) KEY_CACHE_SIZE_IN_MB=$2; echo "key_cache_size_in_mb=$KEY_CACHE_SIZE_IN_MB"; shift 2;;
+                        esac ;;
+                --keystore)
+                        case "$2" in
+                                '') echo "Please provide an value for $1"; ERRORS=$(($ERRORS+1)); shift 2;;
+                                *) KEYSTORE=$2; echo "keystore=$KEYSTORE"; shift 2;;
+                        esac ;;
+                --keystore_password)
+                        case "$2" in
+                                '') echo "Please provide an value for $1"; ERRORS=$(($ERRORS+1)); shift 2;;
+                                *) KEYSTORE_PASSWORD=$2; echo "keystore_password=$KEYSTORE_PASSWORD"; shift 2;;
+                        esac ;;
+                --listen_address)
+                        case "$2" in
+                                '') echo "Please provide an value for $1"; ERRORS=$(($ERRORS+1)); shift 2;;
+                                *) LISTEN_ADDRESS=$2; echo "listen_address=$LISTEN_ADDRESS"; shift 2;;
+                        esac ;;
+                --max_hint_window_in_ms)
+                        case "$2" in
+                                '') echo "Please provide an value for $1"; ERRORS=$(($ERRORS+1)); shift 2;;
+                                *) MAX_HINT_WINDOW_IN_MS=$2; echo "max_hint_window_in_ms=$MAX_HINT_WINDOW_IN_MS"; shift 2;;
+                        esac ;;
+                --memtable_flush_queue_size)
+                        case "$2" in
+                                '') echo "Please provide an value for $1"; ERRORS=$(($ERRORS+1)); shift 2;;
+                                *) MEMTABLE_FLUSH_QUEUE_SIZE=$2; echo "memtable_flush_queue_size=$MEMTABLE_FLUSH_QUEUE_SIZE"; shift 2;;
+                        esac ;;
+                --memtable_flush_writers)
+                        case "$2" in
+                                '') echo "Please provide an value for $1"; ERRORS=$(($ERRORS+1)); shift 2;;
+                                *) MEMTABLE_FLUSH_WRITERS=$2; echo "memtable_flush_writers=$MEMTABLE_FLUSH_WRITERS"; shift 2;;
+                        esac ;;
+                --memtable_total_space_in_mb)
+                        case "$2" in
+                                '') echo "Please provide an value for $1"; ERRORS=$(($ERRORS+1)); shift 2;;
+                                *) MEMTABLE_TOTAL_SPACE_IN_MB=$2; echo "memtable_total_space_in_mb=$MEMTABLE_TOTAL_SPACE_IN_MB"; shift 2;;
+                        esac ;;
+                --multithreaded_compaction)
+                        case "$2" in
+                                '') echo "Please provide an value for $1"; ERRORS=$(($ERRORS+1)); shift 2;;
+                                *) MULTITHREADED_COMPACTION=$2; echo "multithreaded_compaction=$MULTITHREADED_COMPACTION"; shift 2;;
+                        esac ;;
+                --partitioner)
+                        case "$2" in
+                                '') echo "Please provide an value for $1"; ERRORS=$(($ERRORS+1)); shift 2;;
+                                *) PARTITIONER=$2; echo "partitioner=$PARTITIONER"; shift 2;;
+                        esac ;;
+                --phi_convict_threshold)
+                        case "$2" in
+                                '') echo "Please provide an value for $1"; ERRORS=$(($ERRORS+1)); shift 2;;
+                                *) PHI_CONVICT_THRESHOLD=$2; echo "phi_convict_threshold=$PHI_CONVICT_THRESHOLD"; shift 2;;
+                        esac ;;
+                --reduce_cache_capacity_to)
+                        case "$2" in
+                                '') echo "Please provide an value for $1"; ERRORS=$(($ERRORS+1)); shift 2;;
+                                *) REDUCE_CACHE_CAPACITY_TO=$2; echo "reduce_cache_capacity_to=$REDUCE_CACHE_CAPACITY_TO"; shift 2;;
+                        esac ;;
+                --reduce_cache_sizes_at)
+                        case "$2" in
+                                '') echo "Please provide an value for $1"; ERRORS=$(($ERRORS+1)); shift 2;;
+                                *) REDUCE_CACHE_SIZES_AT=$2; echo "reduce_cache_sizes_at=$REDUCE_CACHE_SIZES_AT"; shift 2;;
+                        esac ;;
+                --request_scheduler)
+                        case "$2" in
+                                '') echo "Please provide an value for $1"; ERRORS=$(($ERRORS+1)); shift 2;;
+                                *) REQUEST_SCHEDULER=$2; echo "request_scheduler=$REQUEST_SCHEDULER"; shift 2;;
+                        esac ;;
+                --request_scheduler_id)
+                        case "$2" in
+                                '') echo "Please provide an value for $1"; ERRORS=$(($ERRORS+1)); shift 2;;
+                                *) REQUEST_SCHEDULER_ID=$2; echo "request_scheduler_id=$REQUEST_SCHEDULER_ID"; shift 2;;
+                        esac ;;
+                --row_cache_provider)
+                        case "$2" in
+                                '') echo "Please provide an value for $1"; ERRORS=$(($ERRORS+1)); shift 2;;
+                                *) ROW_CACHE_PROVIDER=$2; echo "row_cache_provider=$ROW_CACHE_PROVIDER"; shift 2;;
+                        esac ;;
+                --row_cache_save_period)
+                        case "$2" in
+                                '') echo "Please provide an value for $1"; ERRORS=$(($ERRORS+1)); shift 2;;
+                                *) ROW_CACHE_SAVE_PERIOD=$2; echo "row_cache_save_period=$ROW_CACHE_SAVE_PERIOD"; shift 2;;
+                        esac ;;
+                --row_cache_size_in_mb)
+                        case "$2" in
+                                '') echo "Please provide an value for $1"; ERRORS=$(($ERRORS+1)); shift 2;;
+                                *) ROW_CACHE_SIZE_IN_MB=$2; echo "row_cache_size_in_mb=$ROW_CACHE_SIZE_IN_MB"; shift 2;;
+                        esac ;;
+                --rpc_address)
+                        case "$2" in
+                                '') echo "Please provide an value for $1"; ERRORS=$(($ERRORS+1)); shift 2;;
+                                *) RPC_ADDRESS=$2; echo "rpc_address=$RPC_ADDRESS"; shift 2;;
+                        esac ;;
+                --rpc_keepalive)
+                        case "$2" in
+                                '') echo "Please provide an value for $1"; ERRORS=$(($ERRORS+1)); shift 2;;
+                                *) RPC_KEEPALIVE=$2; echo "rpc_keepalive=$RPC_KEEPALIVE"; shift 2;;
+                        esac ;;
+                --rpc_max_threads)
+                        case "$2" in
+                                '') echo "Please provide an value for $1"; ERRORS=$(($ERRORS+1)); shift 2;;
+                                *) RPC_MAX_THREADS=$2; echo "rpc_max_threads=$RPC_MAX_THREADS"; shift 2;;
+                        esac ;;
+                --rpc_min_threads)
+                        case "$2" in
+                                '') echo "Please provide an value for $1"; ERRORS=$(($ERRORS+1)); shift 2;;
+                                *) RPC_MIN_THREADS=$2; echo "rpc_min_threads=$RPC_MIN_THREADS"; shift 2;;
+                        esac ;;
+                --rpc_port)
+                        case "$2" in
+                                '') echo "Please provide an value for $1"; ERRORS=$(($ERRORS+1)); shift 2;;
+                                *) RPC_PORT=$2; echo "rpc_port=$RPC_PORT"; shift 2;;
+                        esac ;;
+                --rpc_recv_buff_size_in_bytes)
+                        case "$2" in
+                                '') echo "Please provide an value for $1"; ERRORS=$(($ERRORS+1)); shift 2;;
+                                *) RPC_RECV_BUFF_SIZE_IN_BYTES=$2; echo "rpc_recv_buff_size_in_bytes=$RPC_RECV_BUFF_SIZE_IN_BYTES"; shift 2;;
+                        esac ;;
+                --rpc_send_buff_size_in_bytes)
+                        case "$2" in
+                                '') echo "Please provide an value for $1"; ERRORS=$(($ERRORS+1)); shift 2;;
+                                *) RPC_SEND_BUFF_SIZE_IN_BYTES=$2; echo "rpc_send_buff_size_in_bytes=$RPC_SEND_BUFF_SIZE_IN_BYTES"; shift 2;;
+                        esac ;;
+                --rpc_server_type)
+                        case "$2" in
+                                '') echo "Please provide an value for $1"; ERRORS=$(($ERRORS+1)); shift 2;;
+                                *) RPC_SERVER_TYPE=$2; echo "rpc_server_type=$RPC_SERVER_TYPE"; shift 2;;
+                        esac ;;
+                --rpc_timeout_in_ms)
+                        case "$2" in
+                                '') echo "Please provide an value for $1"; ERRORS=$(($ERRORS+1)); shift 2;;
+                                *) RPC_TIMEOUT_IN_MS=$2; echo "rpc_timeout_in_ms=$RPC_TIMEOUT_IN_MS"; shift 2;;
+                        esac ;;
+                --saved_caches_directory)
+                        case "$2" in
+                                '') echo "Please provide an value for $1"; ERRORS=$(($ERRORS+1)); shift 2;;
+                                *) SAVED_CACHES_DIRECTORY=$2; echo "saved_caches_directory=$SAVED_CACHES_DIRECTORY"; shift 2;;
+                        esac ;;
+                --seed_provider)
+                        case "$2" in
+                                '') echo "Please provide an value for $1"; ERRORS=$(($ERRORS+1)); shift 2;;
+                                *) SEED_PROVIDER=$2; echo "seed_provider=$SEED_PROVIDER"; shift 2;;
+                        esac ;;
+                --seeds)
+                        case "$2" in
+                                '') echo "Please provide an value for $1"; ERRORS=$(($ERRORS+1)); shift 2;;
+                                *) SEEDS=$2; echo "seeds=$SEEDS"; shift 2;;
+                        esac ;;
+                --sliced_buffer_size_in_kb)
+                        case "$2" in
+                                '') echo "Please provide an value for $1"; ERRORS=$(($ERRORS+1)); shift 2;;
+                                *) SLICED_BUFFER_SIZE_IN_KB=$2; echo "sliced_buffer_size_in_kb=$SLICED_BUFFER_SIZE_IN_KB"; shift 2;;
+                        esac ;;
+                --snapshot_before_compaction)
+                        case "$2" in
+                                '') echo "Please provide an value for $1"; ERRORS=$(($ERRORS+1)); shift 2;;
+                                *) SNAPSHOT_BEFORE_COMPACTION=$2; echo "snapshot_before_compaction=$SNAPSHOT_BEFORE_COMPACTION"; shift 2;;
+                        esac ;;
+                --storage_port)
+                        case "$2" in
+                                '') echo "Please provide an value for $1"; ERRORS=$(($ERRORS+1)); shift 2;;
+                                *) STORAGE_PORT=$2; echo "storage_port=$STORAGE_PORT"; shift 2;;
+                        esac ;;
+                --stream_throughput_outbound_megabits_per_sec)
+                        case "$2" in
+                                '') echo "Please provide an value for $1"; ERRORS=$(($ERRORS+1)); shift 2;;
+                                *) STREAM_THROUGHPUT_OUTBOUND_MEGABITS_PER_SEC=$2; echo "stream_throughput_outbound_megabits_per_sec=$STREAM_THROUGHPUT_OUTBOUND_MEGABITS_PER_SEC"; shift 2;;
+                        esac ;;
+                --thrift_framed_transport_size_in_mb)
+                        case "$2" in
+                                '') echo "Please provide an value for $1"; ERRORS=$(($ERRORS+1)); shift 2;;
+                                *) THRIFT_FRAMED_TRANSPORT_SIZE_IN_MB=$2; echo "thrift_framed_transport_size_in_mb=$THRIFT_FRAMED_TRANSPORT_SIZE_IN_MB"; shift 2;;
+                        esac ;;
+                --thrift_max_message_length_in_mb)
+                        case "$2" in
+                                '') echo "Please provide an value for $1"; ERRORS=$(($ERRORS+1)); shift 2;;
+                                *) THRIFT_MAX_MESSAGE_LENGTH_IN_MB=$2; echo "thrift_max_message_length_in_mb=$THRIFT_MAX_MESSAGE_LENGTH_IN_MB"; shift 2;;
+                        esac ;;
+                --truststore)
+                        case "$2" in
+                                '') echo "Please provide an value for $1"; ERRORS=$(($ERRORS+1)); shift 2;;
+                                *) TRUSTSTORE=$2; echo "truststore=$TRUSTSTORE"; shift 2;;
+                        esac ;;
+                --truststore_password)
+                        case "$2" in
+                                '') echo "Please provide an value for $1"; ERRORS=$(($ERRORS+1)); shift 2;;
+                                *) TRUSTSTORE_PASSWORD=$2; echo "truststore_password=$TRUSTSTORE_PASSWORD"; shift 2;;
+                        esac ;;
+                --max_heap_size)
+                        case "$2" in
+                                '') echo "Please provide an value for $1"; ERRORS=$(($ERRORS+1)); shift 2;;
+                                *) MAX_HEAP_SIZE=$2; echo "max_heap_size=$MAX_HEAP_SIZE"; shift 2;;
+                        esac ;;
+                --heap_newsize)
+                        case "$2" in
+                                '') echo "Please provide an value for $1"; ERRORS=$(($ERRORS+1)); shift 2;;
+                                *) HEAP_NEWSIZE=$2; echo "heap_newsize=$HEAP_NEWSIZE"; shift 2;;
+                        esac ;;
+                --config_dir)
+                        case "$2" in
+                                '') echo "Please provide an value for $1"; ERRORS=$(($ERRORS+1)); shift 2;;
+                                *) CONFIG_DIR=$2; echo "config_dir=$CONFIG_DIR"; shift 2;;
+                        esac ;;
+                -h) HELP=1; echo "help"; shift ;;
+                --) shift ; break ;;
+                *) echo "Internal error!" ; exit 1 ;;
+        esac
+done
+
+
+# EXIT IF WE HAVE ERRORS
+if [ $ERRORS -gt 0 ] ; then exit 1; fi
+
+# we dont care about the rest of the args
+#echo "Remaining arguments:"
+#for arg do echo '--> '"\`$arg'" ; done
+
+# print help then exit
+if [ $HELP ]; then
+
+	STRING='Haha, maybe eventually';
+	echo -e $STRING;
+	exit 1;
+fi
+
+echo "Performing Sanity Checks On Input";
+# lets do some basic error checking before we continue.
+if [ "$LISTEN_ADDRESS" = "0.0.0.0" ]; then
+	echo "--listen_address can not be 0.0.0.0";
+	exit 1;
+fi
+
+if [ "$BROADCAST_ADDRESS" = "0.0.0.0" ]; then
+        echo "--broadcast_address can not be 0.0.0.0";
+        exit 1;
+fi
+
+if [ "x$MAX_HEAP_SIZE" != "x" ] && [ "x$HEAP_NEWSIZE" != "x" ]; then
+	TEMP="1";
+elif [ "x$MAX_HEAP_SIZE" == "x" ] && [ "x$HEAP_NEWSIZE" == "x" ]; then
+	TEMP="1";
+else 
+	echo "--max_heap_size and --heap_newsize must be used together";
+	exit 1;
+fi
+
+if [ !$CONFIG_DIR ]; then
+	CONFIG_DIR='/etc/cassandra/';
+fi
+
+if [ "$SNITCH" = "org.apache.cassandra.locator.PropertyFileSnitch" ]; then
+	CASSANDRA_TOPOLOGY=$CONFIG_DIR"cassandra-topology.properties";
+	if [ ! -e "$CASSANDRA_TOPOLOGY" ]; then
+		echo "cassandra-topology.properties must be defined before using org.apache.cassandra.locator.PropertyFileSnitch in your config directory";	
+		exit 1;
+	fi
+fi
+
+
+## Get machine type 64 bit or 32?
+echo "Determining Platform Type";
+UNAMEM=`uname -m`;
+if [ "$UNAMEM" == "x86_64" ]; then
+	MACHINE_TYPE="64";
+elif [ "$UNAMEM" == "i686" ]; then
+	MACHINE_TYPE="32";
+else 
+	echo "can not determine machine type";
+	exit 1;
+fi
+
+function install_java () {
+	# $1 is the machine type
+
+	if [ "x$1" == "x" ]; then
+		echo "install_java function must have a machine_type as the first parameter";
+		exit 1;
+	fi
+	
+	DL_URL="http://www.java.com/en/download/manual_v6.jsp"
+	JAVA_FILE="jre1.6.bin"
+	TEMP_JAVA_HTML=/tmp/java.html
+	JAVA_HTML=`curl -L -s $DL_URL > $TEMP_JAVA_HTML`
+	JAVA_MINOR_VERSION=`grep -m 1 -P -o '(?<=Update )\d+(?=.*)' <$TEMP_JAVA_HTML`
+
+	echo "Installing Sun JAVA 1.6";
+	if [ "$1" == "64" ]; then
+		JAVA_URL=`sed -n '/Linux x64" / s/.*href="\(.*\)" .*$/\1/p;T;q' < $TEMP_JAVA_HTML`;
+	elif [ "$1" == "32" ]; then
+		JAVA_URL=`sed -n '/Linux" / s/.*href="\(.*\)" .*$/\1/p;T;q' < $TEMP_JAVA_HTML`;
+	else
+		echo "install_java function does not understand the machine type";
+		exit 1;
+	fi
+
+	#install 1.6 and set it as the default
+	CWD=`pwd`;
+	mkdir -p /opt/java/$1;
+	cd /opt/java/$1;
+	curl -L -s -S $JAVA_URL > $JAVA_FILE;
+	chmod +x $JAVA_FILE;
+	./$JAVA_FILE > /dev/null;
+	update-alternatives --install "/usr/bin/java" "java" "/opt/java/$1/jre1.6.0_$JAVA_MINOR_VERSION/bin/java" 1 > /dev/null;
+	update-alternatives --set "java" /opt/java/$1/jre1.6.0_$JAVA_MINOR_VERSION/bin/java > /dev/null;
+	cd $CWD;
+	echo "Sun Java 1.6 Installed";
+}
+
+
+###lets make sure we got java sun installed
+echo "Searching For Java";
+## if openjdk is install prep for java 1.6 install
+OPENJDK=`"${JAVA:-java}" -version 2>&1 | awk '{if (NR == 2) {print $1}}'`
+if [ $OPENJDK ]; then
+    echo "OPENJDK RESULT = $OPENJDK";
+fi
+if [ "$OPENJDK" != "OpenJDK" ]; then
+	## check if 1.6 is installed
+	echo "Checking for Sun Java 1.6";
+	JAVA_VERSION=`"${JAVA:-java}" -version 2>&1 | awk '/version/ {print $3}' | egrep -o '[0-9]+\.[0-9]+'`
+	if [ "$JAVA_VERSION" != "1.6" ]; then
+		echo "Sun Java 1.6 Not Found"
+		install_java $MACHINE_TYPE;
+	fi
+else 
+	echo "OpenJDK found"
+	install_java $MACHINE_TYPE;
+fi	
+
+### lets add the repos to the sources list
+
+SOURCES_FILE="/etc/apt/sources.list.d/teaspoon.list";
+REPO="deb http://debian.datastax.com/community stable main";
+
+function install_repos() {
+
+    echo "Adding Repositories"
+    echo -e "##CASSANDRA REPO \r\n$REPO" >> $SOURCES_FILE;
+    curl -s -S -L http://debian.datastax.com/debian/repo_key | apt-key add -
+    echo "Updating Repositories"
+    apt-get update > /dev/null
+    echo "Installing Nessesary Software";
+    apt-get install -y libjna-java python-cql dsc1.1 > /dev/null
+
+}
+
+# check if repos are already there
+echo "Checking For Repositiories";
+if [ -f $SOURCES_FILE ]; then
+	GREP_R=`grep "^${REPO}$" $SOURCES_FILE`;
+	if [ "x$GREP_R" != "x" ]; then
+		echo "Cassandra Repos Already Found";
+	else 
+		install_repos;	
+	fi
+else 
+	install_repos;
+fi
+
+CASSANDRA_ENV=$CONFIG_DIR"cassandra-env.sh";
+CASSANDRA_YAML=$CONFIG_DIR"cassandra.yaml";
+[ ! -e "$CASSANDRA_ENV" ] && echo "$CASSANDRA_ENV is not found or readable." && exit 1;
+[ ! -e "$CASSANDRA_YAML" ] &&  echo "$CASSANDRA_YAML is not found or readable." && exit 1;
+
+# BACKUP cassandra.yaml and cassandra-env.sh FILE
+echo "Backing Up $CASSANDRA_YAML $CASSANDRA_ENV";
+cp $CASSANDRA_YAML $CASSANDRA_YAML".backup";
+cp $CASSANDRA_ENV $CASSANDRA_ENV".backup"
+
+# create some variables for temp files
+CASSANDRA_YAML_TMP=$CASSANDRA_YAML".tmp";
+CASSANDRA_ENV_TMP=$CASSANRDA_ENV".tmp";
+
+# FIND AND REPLACE MAX_HEAP_SIZE
+if [ "x$MAX_HEAP_SIZE" != "x" ]; then
+	echo "Modifying MAX_HEAP_SIZE";
+        RESULT=`/bin/sed -r "s/^#?MAX_HEAP_SIZE=.*\$/MAX_HEAP_SIZE= \"$MAX_HEAP_SIZE\"/" $CASSANDRA_ENV > $CASSANDRA_ENV_TMP`;
+        mv $CASSANDRA_ENV_TMP $CASSANDRA_ENV;
+fi
+
+if [ "x$HEAP_NEWSIZE" != "x" ]; then
+	echo "Modifying HEAP_NEWSIZE";
+        RESULT=`/bin/sed -r "s/^#?HEAP_NEWSIZE=.*\$/HEAP_NEWSIZE= \"$HEAP_NEWSIZE\"/" $CASSANDRA_ENV > $CASSANDRA_ENV_TMP`;
+        mv $CASSANDRA_ENV_TMP $CASSANDRA_ENV;
+fi
+
+
+function find_replace () {
+	# $1 parameter in file to edit
+	# $2 data for parameter in the file to edit
+	# $3 file to edit
+	# $4 temp file for editing
+	if [ "x$1" == "x" ] || [ "x$2" == "x" ] || [ "x$3" == "x" ] || [ "x$4" == "x" ]; then
+		echo "Bad Parameters to cassandra_yaml_find_replace function";
+		exit 1;
+	fi
+
+	echo "Modifying $1";
+        RESULT=`/bin/sed "s/^.*$1.*\$/$1 $2/" $3 > $4`;
+        mv $4 $3;
+}
+
+# FIND AND REPLACE AUTHENTICATOR
+if [ "x$AUTHENTICATOR" != "x" ]; then
+        find_replace "authenticator:" $AUTHENTICATOR $CASSANDRA_YAML $CASSANDRA_YAML_TMP;
+fi
+# FIND AND REPLACE AUTHORITY
+if [ "x$AUTHORITY" != "x" ]; then
+        find_replace "authority:" $AUTHORITY $CASSANDRA_YAML $CASSANDRA_YAML_TMP;
+fi
+# FIND AND REPLACE BROADCAST_ADDRESS
+if [ "x$BROADCAST_ADDRESS" != "x" ]; then
+        find_replace "broadcast_address:" $BROADCAST_ADDRESS $CASSANDRA_YAML $CASSANDRA_YAML_TMP;
+fi
+# FIND AND REPLACE CLUSTER_NAME
+if [ "x$CLUSTER_NAME" != "x" ]; then
+        find_replace "cluster_name:" $CLUSTER_NAME $CASSANDRA_YAML $CASSANDRA_YAML_TMP;
+fi
+# FIND AND REPLACE COLUMN_INDEX_SIZE_IN_KB
+if [ "x$COLUMN_INDEX_SIZE_IN_KB" != "x" ]; then
+        find_replace "column_index_size_in_kb:" $COLUMN_INDEX_SIZE_IN_KB $CASSANDRA_YAML $CASSANDRA_YAML_TMP;
+fi
+# FIND AND REPLACE COMMITLOG_DIRECTORY
+if [ "x$COMMITLOG_DIRECTORY" != "x" ]; then
+        find_replace "commitlog_directory:" $COMMITLOG_DIRECTORY $CASSANDRA_YAML $CASSANDRA_YAML_TMP;
+fi
+# FIND AND REPLACE COMMITLOG_SYNC
+if [ "x$COMMITLOG_SYNC" != "x" ]; then
+        find_replace "commitlog_sync:" $COMMITLOG_SYNC $CASSANDRA_YAML $CASSANDRA_YAML_TMP;
+fi
+# FIND AND REPLACE COMMITLOG_SYNC_PERIOD_IN_MS
+if [ "x$COMMITLOG_SYNC_PERIOD_IN_MS" != "x" ]; then
+        find_replace "commitlog_sync_period_in_ms:" $COMMITLOG_SYNC_PERIOD_IN_MS $CASSANDRA_YAML $CASSANDRA_YAML_TMP;
+fi
+# FIND AND REPLACE COMMITLOG_TOTAL_SPACE_IN_MB
+if [ "x$COMMITLOG_TOTAL_SPACE_IN_MB" != "x" ]; then
+        find_replace "commitlog_total_space_in_mb:" $COMMITLOG_TOTAL_SPACE_IN_MB $CASSANDRA_YAML $CASSANDRA_YAML_TMP;
+fi
+# FIND AND REPLACE COMPACTION_PREHEAT_KEY_CACHE
+if [ "x$COMPACTION_PREHEAT_KEY_CACHE" != "x" ]; then
+        find_replace "compaction_preheat_key_cache:" $COMPACTION_PREHEAT_KEY_CACHE $CASSANDRA_YAML $CASSANDRA_YAML_TMP;
+fi
+# FIND AND REPLACE COMPACTION_THROUGHPUT_MB_PER_SEC
+if [ "x$COMPACTION_THROUGHPUT_MB_PER_SEC" != "x" ]; then
+        find_replace "compaction_throughput_mb_per_sec:" $COMPACTION_THROUGHPUT_MB_PER_SEC $CASSANDRA_YAML $CASSANDRA_YAML_TMP;
+fi
+# FIND AND REPLACE CONCURRENT_COMPACTORS
+if [ "x$CONCURRENT_COMPACTORS" != "x" ]; then
+        find_replace "concurrent_compactors:" $CONCURRENT_COMPACTORS $CASSANDRA_YAML $CASSANDRA_YAML_TMP;
+fi
+# FIND AND REPLACE CONCURRENT_READS
+if [ "x$CONCURRENT_READS" != "x" ]; then
+        find_replace "concurrent_reads:" $CONCURRENT_READS $CASSANDRA_YAML $CASSANDRA_YAML_TMP;
+fi
+# FIND AND REPLACE CONCURRENT_WRITES
+if [ "x$CONCURRENT_WRITES" != "x" ]; then
+        find_replace "concurrent_writes:" $CONCURRENT_WRITES $CASSANDRA_YAML $CASSANDRA_YAML_TMP;
+fi
+# FIND AND REPLACE DATA_FILE_DIRECTORIES
+if [ "x$DATA_FILE_DIRECTORIES" != "x" ]; then
+        find_replace "data_file_directories:" $DATA_FILE_DIRECTORIES $CASSANDRA_YAML $CASSANDRA_YAML_TMP;
+fi
+# FIND AND REPLACE DYNAMIC_SNITCH
+if [ "x$DYNAMIC_SNITCH" != "x" ]; then
+        find_replace "dynamic_snitch:" $DYNAMIC_SNITCH $CASSANDRA_YAML $CASSANDRA_YAML_TMP;
+fi
+# FIND AND REPLACE DYNAMIC_SNITCH_BADNESS_THRESHOLD
+if [ "x$DYNAMIC_SNITCH_BADNESS_THRESHOLD" != "x" ]; then
+        find_replace "dynamic_snitch_badness_threshold:" $DYNAMIC_SNITCH_BADNESS_THRESHOLD $CASSANDRA_YAML $CASSANDRA_YAML_TMP;
+fi
+# FIND AND REPLACE DYNAMIC_SNITCH_RESET_INTERVAL_IN_MS
+if [ "x$DYNAMIC_SNITCH_RESET_INTERVAL_IN_MS" != "x" ]; then
+        find_replace "dynamic_snitch_reset_interval_in_ms:" $DYNAMIC_SNITCH_RESET_INTERVAL_IN_MS $CASSANDRA_YAML $CASSANDRA_YAML_TMP;
+fi
+# FIND AND REPLACE DYNAMIC_SNITCH_UPDATE_INTERVAL_IN_MS
+if [ "x$DYNAMIC_SNITCH_UPDATE_INTERVAL_IN_MS" != "x" ]; then
+        find_replace "dynamic_snitch_update_interval_in_ms:" $DYNAMIC_SNITCH_UPDATE_INTERVAL_IN_MS $CASSANDRA_YAML $CASSANDRA_YAML_TMP;
+fi
+# FIND AND REPLACE ENDPOINT_SNITCH
+if [ "x$ENDPOINT_SNITCH" != "x" ]; then
+        find_replace "endpoint_snitch:" $ENDPOINT_SNITCH $CASSANDRA_YAML $CASSANDRA_YAML_TMP;
+fi
+# FIND AND REPLACE FLUSH_LARGEST_MEMTABLES_AT
+if [ "x$FLUSH_LARGEST_MEMTABLES_AT" != "x" ]; then
+        find_replace "flush_largest_memtables_at:" $FLUSH_LARGEST_MEMTABLES_AT $CASSANDRA_YAML $CASSANDRA_YAML_TMP;
+fi
+# FIND AND REPLACE HINTED_HANDOFF_ENABLED
+if [ "x$HINTED_HANDOFF_ENABLED" != "x" ]; then
+        find_replace "hinted_handoff_enabled:" $HINTED_HANDOFF_ENABLED $CASSANDRA_YAML $CASSANDRA_YAML_TMP;
+fi
+# FIND AND REPLACE HINTED_HANDOFF_THROTTLE_DELAY_IN_MS
+if [ "x$HINTED_HANDOFF_THROTTLE_DELAY_IN_MS" != "x" ]; then
+        find_replace "hinted_handoff_throttle_delay_in_ms:" $HINTED_HANDOFF_THROTTLE_DELAY_IN_MS $CASSANDRA_YAML $CASSANDRA_YAML_TMP;
+fi
+# FIND AND REPLACE INCREMENTAL_BACKUPS
+if [ "x$INCREMENTAL_BACKUPS" != "x" ]; then
+        find_replace "incremental_backups:" $INCREMENTAL_BACKUPS $CASSANDRA_YAML $CASSANDRA_YAML_TMP;
+fi
+# FIND AND REPLACE INDEX_INTERVAL
+if [ "x$INDEX_INTERVAL" != "x" ]; then
+        find_replace "index_interval:" $INDEX_INTERVAL $CASSANDRA_YAML $CASSANDRA_YAML_TMP;
+fi
+# FIND AND REPLACE INITIAL_TOKEN
+if [ "x$INITIAL_TOKEN" != "x" ]; then
+        find_replace "initial_token:" $INITIAL_TOKEN $CASSANDRA_YAML $CASSANDRA_YAML_TMP;
+fi
+# FIND AND REPLACE IN_MEMORY_COMPACTION_LIMIT_IN_MB
+if [ "x$IN_MEMORY_COMPACTION_LIMIT_IN_MB" != "x" ]; then
+        find_replace "in_memory_compaction_limit_in_mb:" $IN_MEMORY_COMPACTION_LIMIT_IN_MB $CASSANDRA_YAML $CASSANDRA_YAML_TMP;
+fi
+# FIND AND REPLACE INTERNODE_ENCRYPTION
+if [ "x$INTERNODE_ENCRYPTION" != "x" ]; then
+        find_replace "internode_encryption:" $INTERNODE_ENCRYPTION $CASSANDRA_YAML $CASSANDRA_YAML_TMP;
+fi
+# FIND AND REPLACE KEY_CACHE_SAVE_PERIOD
+if [ "x$KEY_CACHE_SAVE_PERIOD" != "x" ]; then
+        find_replace "key_cache_save_period:" $KEY_CACHE_SAVE_PERIOD $CASSANDRA_YAML $CASSANDRA_YAML_TMP;
+fi
+# FIND AND REPLACE KEY_CACHE_SIZE_IN_MB
+if [ "x$KEY_CACHE_SIZE_IN_MB" != "x" ]; then
+        find_replace "key_cache_size_in_mb:" $KEY_CACHE_SIZE_IN_MB $CASSANDRA_YAML $CASSANDRA_YAML_TMP;
+fi
+# FIND AND REPLACE KEYSTORE
+if [ "x$KEYSTORE" != "x" ]; then
+        find_replace "keystore:" $KEYSTORE $CASSANDRA_YAML $CASSANDRA_YAML_TMP;
+fi
+# FIND AND REPLACE KEYSTORE_PASSWORD
+if [ "x$KEYSTORE_PASSWORD" != "x" ]; then
+        find_replace "keystore_password:" $KEYSTORE_PASSWORD $CASSANDRA_YAML $CASSANDRA_YAML_TMP;
+fi
+# FIND AND REPLACE LISTEN_ADDRESS
+if [ "x$LISTEN_ADDRESS" != "x" ]; then
+        find_replace "listen_address:" $LISTEN_ADDRESS $CASSANDRA_YAML $CASSANDRA_YAML_TMP;
+fi
+# FIND AND REPLACE MAX_HINT_WINDOW_IN_MS
+if [ "x$MAX_HINT_WINDOW_IN_MS" != "x" ]; then
+        find_replace "max_hint_window_in_ms:" $MAX_HINT_WINDOW_IN_MS $CASSANDRA_YAML $CASSANDRA_YAML_TMP;
+fi
+# FIND AND REPLACE MEMTABLE_FLUSH_QUEUE_SIZE
+if [ "x$MEMTABLE_FLUSH_QUEUE_SIZE" != "x" ]; then
+        find_replace "memtable_flush_queue_size:" $MEMTABLE_FLUSH_QUEUE_SIZE $CASSANDRA_YAML $CASSANDRA_YAML_TMP;
+fi
+# FIND AND REPLACE MEMTABLE_FLUSH_WRITERS
+if [ "x$MEMTABLE_FLUSH_WRITERS" != "x" ]; then
+        find_replace "memtable_flush_writers:" $MEMTABLE_FLUSH_WRITERS $CASSANDRA_YAML $CASSANDRA_YAML_TMP;
+fi
+# FIND AND REPLACE MEMTABLE_TOTAL_SPACE_IN_MB
+if [ "x$MEMTABLE_TOTAL_SPACE_IN_MB" != "x" ]; then
+        find_replace "memtable_total_space_in_mb:" $MEMTABLE_TOTAL_SPACE_IN_MB $CASSANDRA_YAML $CASSANDRA_YAML_TMP;
+fi
+# FIND AND REPLACE MULTITHREADED_COMPACTION
+if [ "x$MULTITHREADED_COMPACTION" != "x" ]; then
+        find_replace "multithreaded_compaction:" $MULTITHREADED_COMPACTION $CASSANDRA_YAML $CASSANDRA_YAML_TMP;
+fi
+# FIND AND REPLACE PARTITIONER
+if [ "x$PARTITIONER" != "x" ]; then
+        find_replace "partitioner:" $PARTITIONER $CASSANDRA_YAML $CASSANDRA_YAML_TMP;
+fi
+# FIND AND REPLACE PHI_CONVICT_THRESHOLD
+if [ "x$PHI_CONVICT_THRESHOLD" != "x" ]; then
+        find_replace "phi_convict_threshold:" $PHI_CONVICT_THRESHOLD $CASSANDRA_YAML $CASSANDRA_YAML_TMP;
+fi
+# FIND AND REPLACE REDUCE_CACHE_CAPACITY_TO
+if [ "x$REDUCE_CACHE_CAPACITY_TO" != "x" ]; then
+        find_replace "reduce_cache_capacity_to:" $REDUCE_CACHE_CAPACITY_TO $CASSANDRA_YAML $CASSANDRA_YAML_TMP;
+fi
+# FIND AND REPLACE REDUCE_CACHE_SIZES_AT
+if [ "x$REDUCE_CACHE_SIZES_AT" != "x" ]; then
+        find_replace "reduce_cache_sizes_at:" $REDUCE_CACHE_SIZES_AT $CASSANDRA_YAML $CASSANDRA_YAML_TMP;
+fi
+# FIND AND REPLACE REQUEST_SCHEDULER
+if [ "x$REQUEST_SCHEDULER" != "x" ]; then
+        find_replace "request_scheduler:" $REQUEST_SCHEDULER $CASSANDRA_YAML $CASSANDRA_YAML_TMP;
+fi
+# FIND AND REPLACE REQUEST_SCHEDULER_ID
+if [ "x$REQUEST_SCHEDULER_ID" != "x" ]; then
+        find_replace "request_scheduler_id:" $REQUEST_SCHEDULER_ID $CASSANDRA_YAML $CASSANDRA_YAML_TMP;
+fi
+# FIND AND REPLACE ROW_CACHE_PROVIDER
+if [ "x$ROW_CACHE_PROVIDER" != "x" ]; then
+        find_replace "row_cache_provider:" $ROW_CACHE_PROVIDER $CASSANDRA_YAML $CASSANDRA_YAML_TMP;
+fi
+# FIND AND REPLACE ROW_CACHE_SAVE_PERIOD
+if [ "x$ROW_CACHE_SAVE_PERIOD" != "x" ]; then
+        find_replace "row_cache_save_period:" $ROW_CACHE_SAVE_PERIOD $CASSANDRA_YAML $CASSANDRA_YAML_TMP;
+fi
+# FIND AND REPLACE ROW_CACHE_SIZE_IN_MB
+if [ "x$ROW_CACHE_SIZE_IN_MB" != "x" ]; then
+        find_replace "row_cache_size_in_mb:" $ROW_CACHE_SIZE_IN_MB $CASSANDRA_YAML $CASSANDRA_YAML_TMP;
+fi
+# FIND AND REPLACE RPC_ADDRESS
+if [ "x$RPC_ADDRESS" != "x" ]; then
+        find_replace "rpc_address:" $RPC_ADDRESS $CASSANDRA_YAML $CASSANDRA_YAML_TMP;
+fi
+# FIND AND REPLACE RPC_KEEPALIVE
+if [ "x$RPC_KEEPALIVE" != "x" ]; then
+        find_replace "rpc_keepalive:" $RPC_KEEPALIVE $CASSANDRA_YAML $CASSANDRA_YAML_TMP;
+fi
+# FIND AND REPLACE RPC_MAX_THREADS
+if [ "x$RPC_MAX_THREADS" != "x" ]; then
+        find_replace "rpc_max_threads:" $RPC_MAX_THREADS $CASSANDRA_YAML $CASSANDRA_YAML_TMP;
+fi
+# FIND AND REPLACE RPC_MIN_THREADS
+if [ "x$RPC_MIN_THREADS" != "x" ]; then
+        find_replace "rpc_min_threads:" $RPC_MIN_THREADS $CASSANDRA_YAML $CASSANDRA_YAML_TMP;
+fi
+# FIND AND REPLACE RPC_PORT
+if [ "x$RPC_PORT" != "x" ]; then
+        find_replace "rpc_port:" $RPC_PORT $CASSANDRA_YAML $CASSANDRA_YAML_TMP;
+fi
+# FIND AND REPLACE RPC_RECV_BUFF_SIZE_IN_BYTES
+if [ "x$RPC_RECV_BUFF_SIZE_IN_BYTES" != "x" ]; then
+        find_replace "rpc_recv_buff_size_in_bytes:" $RPC_RECV_BUFF_SIZE_IN_BYTES $CASSANDRA_YAML $CASSANDRA_YAML_TMP;
+fi
+# FIND AND REPLACE RPC_SEND_BUFF_SIZE_IN_BYTES
+if [ "x$RPC_SEND_BUFF_SIZE_IN_BYTES" != "x" ]; then
+        find_replace "rpc_send_buff_size_in_bytes:" $RPC_SEND_BUFF_SIZE_IN_BYTES $CASSANDRA_YAML $CASSANDRA_YAML_TMP;
+fi
+# FIND AND REPLACE RPC_SERVER_TYPE
+if [ "x$RPC_SERVER_TYPE" != "x" ]; then
+        find_replace "rpc_server_type:" $RPC_SERVER_TYPE $CASSANDRA_YAML $CASSANDRA_YAML_TMP;
+fi
+# FIND AND REPLACE RPC_TIMEOUT_IN_MS
+if [ "x$RPC_TIMEOUT_IN_MS" != "x" ]; then
+        find_replace "rpc_timeout_in_ms:" $RPC_TIMEOUT_IN_MS $CASSANDRA_YAML $CASSANDRA_YAML_TMP;
+fi
+# FIND AND REPLACE SAVED_CACHES_DIRECTORY
+if [ "x$SAVED_CACHES_DIRECTORY" != "x" ]; then
+        find_replace "saved_caches_directory:" $SAVED_CACHES_DIRECTORY $CASSANDRA_YAML $CASSANDRA_YAML_TMP;
+fi
+# FIND AND REPLACE SEED_PROVIDER
+if [ "x$SEED_PROVIDER" != "x" ]; then
+        find_replace "seed_provider:" $SEED_PROVIDER $CASSANDRA_YAML $CASSANDRA_YAML_TMP;
+fi
+# FIND AND REPLACE SEEDS
+if [ "x$SEEDS" != "x" ]; then
+        find_replace "seeds:" $SEEDS $CASSANDRA_YAML $CASSANDRA_YAML_TMP;
+fi
+# FIND AND REPLACE SLICED_BUFFER_SIZE_IN_KB
+if [ "x$SLICED_BUFFER_SIZE_IN_KB" != "x" ]; then
+        find_replace "sliced_buffer_size_in_kb:" $SLICED_BUFFER_SIZE_IN_KB $CASSANDRA_YAML $CASSANDRA_YAML_TMP;
+fi
+# FIND AND REPLACE SNAPSHOT_BEFORE_COMPACTION
+if [ "x$SNAPSHOT_BEFORE_COMPACTION" != "x" ]; then
+        find_replace "snapshot_before_compaction:" $SNAPSHOT_BEFORE_COMPACTION $CASSANDRA_YAML $CASSANDRA_YAML_TMP;
+fi
+# FIND AND REPLACE STORAGE_PORT
+if [ "x$STORAGE_PORT" != "x" ]; then
+        find_replace "storage_port:" $STORAGE_PORT $CASSANDRA_YAML $CASSANDRA_YAML_TMP;
+fi
+# FIND AND REPLACE STREAM_THROUGHPUT_OUTBOUND_MEGABITS_PER_SEC
+if [ "x$STREAM_THROUGHPUT_OUTBOUND_MEGABITS_PER_SEC" != "x" ]; then
+        find_replace "stream_throughput_outbound_megabits_per_sec:" $STREAM_THROUGHPUT_OUTBOUND_MEGABITS_PER_SEC $CASSANDRA_YAML $CASSANDRA_YAML_TMP;
+fi
+# FIND AND REPLACE THRIFT_FRAMED_TRANSPORT_SIZE_IN_MB
+if [ "x$THRIFT_FRAMED_TRANSPORT_SIZE_IN_MB" != "x" ]; then
+        find_replace "thrift_framed_transport_size_in_mb:" $THRIFT_FRAMED_TRANSPORT_SIZE_IN_MB $CASSANDRA_YAML $CASSANDRA_YAML_TMP;
+fi
+# FIND AND REPLACE THRIFT_MAX_MESSAGE_LENGTH_IN_MB
+if [ "x$THRIFT_MAX_MESSAGE_LENGTH_IN_MB" != "x" ]; then
+        find_replace "thrift_max_message_length_in_mb:" $THRIFT_MAX_MESSAGE_LENGTH_IN_MB $CASSANDRA_YAML $CASSANDRA_YAML_TMP;
+fi
+# FIND AND REPLACE TRUSTSTORE
+if [ "x$TRUSTSTORE" != "x" ]; then
+        find_replace "truststore:" $TRUSTSTORE $CASSANDRA_YAML $CASSANDRA_YAML_TMP;
+fi
+# FIND AND REPLACE TRUSTSTORE_PASSWORD
+if [ "x$TRUSTSTORE_PASSWORD" != "x" ]; then
+        find_replace "truststore_password:" $TRUSTSTORE_PASSWORD $CASSANDRA_YAML $CASSANDRA_YAML_TMP;
+fi
+
+
+
+
+## RESTART CASSANDRA
+echo "Stoping Cassandra"
+service cassandra stop > /dev/null
+echo "Removing System Data";
+rm -rf /var/lib/cassandra/data/system/*
+echo "Starting Cassandra";
+service cassandra start > /dev/null
+echo "Complete";

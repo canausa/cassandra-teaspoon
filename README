@@ -1,0 +1,24 @@
+An simplification in managing the installation of cassandra, a distrubted nosql database, and sun java 1.6 on a debian like system.
+
+Basic Usage for a single
+------------------------ 
+curl -L https://raw.github.com/canausa/cassandra-teaspoon/master/teaspoon | sudo bash
+
+Advanced Features
+--------------------
+Any setting defined in http://www.datastax.com/docs/1.1/configuration/node_configuration is allowed in cassandra teaspoon by using
+--setting_name=setting_value
+
+If your config files are outside of the standard /etc/cassandra dir then you can pass 
+--config_location=/some/new/dir
+
+If your would like to adjust the max_heap_size or heap_newsize the parameters --heap_newsize and --max_heap_size are available
+
+
+example:
+
+sudo teaspoon --listen_address=192.168.1.1 --broadcast_address=192.168.1.2 --max_head_size=8G --heap_newsize=400M
+
+Misc
+-----------
+On average for me it takes about 1 minute and 15 seconds to install any combination of the settings above and having a fully running datastax 1.1 version of cassandra with sun java 1.6
