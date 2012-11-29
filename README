@@ -1,4 +1,4 @@
-An simplification in managing the installation of cassandra, a distrubted nosql database, and sun java 1.6 on a debian like system.
+An simplification in managing the installation of Apache Cassandra, a distributed nosql database, and sun java 1.6 on a debian like system.
 
 Basic Usage for a single
 ------------------------ 
@@ -22,3 +22,14 @@ sudo teaspoon --listen_address=192.168.1.1 --broadcast_address=192.168.1.2 --max
 Misc
 -----------
 On average for me it takes about 1 minute and 15 seconds to install any combination of the settings above and having a fully running datastax 1.1 version of cassandra with sun java 1.6
+
+License
+------------------
+The MIT License (MIT)
+Copyright (c) 2012 Terrance <tscanausa@gmail.com>
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
