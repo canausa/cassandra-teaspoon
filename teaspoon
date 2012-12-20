@@ -808,7 +808,7 @@ if [ "x$SEED_PROVIDER" != "x" ]; then
 fi
 # FIND AND REPLACE SEEDS
 if [ "x$SEEDS" != "x" ]; then
-        find_replace "seeds:" $SEEDS $CASSANDRA_YAML $CASSANDRA_YAML_TMP;
+        find_replace "      - seeds:" '"'.$SEEDS.'"' $CASSANDRA_YAML $CASSANDRA_YAML_TMP;
 fi
 # FIND AND REPLACE SLICED_BUFFER_SIZE_IN_KB
 if [ "x$SLICED_BUFFER_SIZE_IN_KB" != "x" ]; then
